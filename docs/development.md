@@ -9,6 +9,8 @@ This document describes the development workflow for ark using Claude Code (CC).
 ark uses **Spec Driven Development (SDD)** with CC as the primary development assistant.
 All feature work is traceable to a GitHub issue with Acceptance Criteria.
 
+See [`docs/workflow.md`](workflow.md) for the visual workflow diagram.
+
 ---
 
 ## Tools & Their Roles
@@ -180,5 +182,6 @@ These rules keep CC on track and prevent common LLM drift patterns:
 | `CLAUDE.md` | CC harness (conventions, guardrails, SDD rules) |
 | `docs/concept.md` | Design goals and architecture decisions |
 | `docs/development.md` | This file — development process |
+| `docs/workflow.md` | Workflow diagram (Mermaid) — updated with each process change |
 | `.github/workflows/ci.yml` | CI pipeline |
 | `.golangci.yml` | Linter configuration |
