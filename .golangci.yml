@@ -6,16 +6,13 @@ linters:
     - errcheck       # unchecked errors
     - govet          # go vet checks
     - staticcheck    # comprehensive static analysis
-    - ineffassign    # detects assignments whose values are never used
-    - unused         # checks for unused constants, variables, functions and types
+    - ineffassign    # assignments whose values are never used
+    - unused         # unused constants, variables, functions and types
 
     # Style & conventions
-    - revive         # drop-in replacement for golint, highly configurable
-    - gofmt          # formatting check
-    - goimports      # import grouping and formatting
+    - revive         # highly configurable golint replacement
     - misspell       # spelling mistakes in comments/strings
-    - godot          # check that comments end with a period
-    - whitespace     # detects leading/trailing blank lines
+    - whitespace     # leading/trailing blank lines
 
     # Bugs
     - bodyclose      # HTTP response body not closed
@@ -30,43 +27,43 @@ linters:
     - cyclop         # cyclomatic complexity
     - gocognit       # cognitive complexity
 
-linters-settings:
-  goimports:
-    local-prefixes: github.com/zigorou/ark
+  settings:
+    revive:
+      rules:
+        - name: exported
+        - name: error-strings
+        - name: error-return
+        - name: increment-decrement
+        - name: var-declaration
+        - name: range
 
-  revive:
+    gosec:
+      excludes:
+        - G304  # file inclusion via variable — acceptable for vault file reads
+
+    cyclop:
+      max-complexity: 15
+
+    gocognit:
+      min-complexity: 20
+
+  exclusions:
     rules:
-      - name: exported
-        arguments:
-          - disableStutteringCheck: false
-      - name: error-strings
-      - name: error-return
-      - name: increment-decrement
-      - name: var-declaration
-      - name: range
+      # Test files are exempt from some style checks
+      - path: "_test\\.go"
+        linters:
+          - gosec
+      # main.go exempt from some style checks (cobra generates boilerplate)
+      - path: "main\\.go"
+        linters:
+          - gocognit
 
-  gosec:
-    excludes:
-      - G304  # file inclusion via variable — acceptable for vault file reads
+formatters:
+  enable:
+    - gofmt
+    - goimports
 
-  cyclop:
-    max-complexity: 15
-
-  gocognit:
-    min-complexity: 20
-
-  godot:
-    # Allow all-caps abbreviations (e.g. "URI", "SOPS") without trailing period
-    capital: true
-
-issues:
-  exclude-rules:
-    # Test files are exempt from some style checks
-    - path: "_test\\.go"
-      linters:
-        - gosec
-        - godot
-    # main.go exempt from godot (cobra generates boilerplate)
-    - path: "main\\.go"
-      linters:
-        - godot
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/zigorou/ark

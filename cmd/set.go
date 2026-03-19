@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var setCmd = &cobra.Command{
+var setCmd = &cobra.Command{ //nolint:gosec // G101: example strings in help text are not real credentials
 	Use:   "set <uri> <value>",
 	Short: "Add or update a secret value in the vault",
 	Long: `Add or update a secret in the vault identified by a URI.

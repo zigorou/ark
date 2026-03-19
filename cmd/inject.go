@@ -26,7 +26,11 @@ Example:
 func init() {
 	injectCmd.Flags().StringP("in", "i", "", "input template file (required)")
 	injectCmd.Flags().StringP("out", "o", "", "output file (required)")
-	injectCmd.MarkFlagRequired("in")
-	injectCmd.MarkFlagRequired("out")
+	if err := injectCmd.MarkFlagRequired("in"); err != nil {
+		panic(err)
+	}
+	if err := injectCmd.MarkFlagRequired("out"); err != nil {
+		panic(err)
+	}
 	rootCmd.AddCommand(injectCmd)
 }

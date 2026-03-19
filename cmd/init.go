@@ -24,6 +24,8 @@ Example:
 
 func init() {
 	initCmd.Flags().StringP("repo", "r", "", "GitHub repository to use as vault (e.g. github.com/user/my-vault)")
-	initCmd.MarkFlagRequired("repo")
+	if err := initCmd.MarkFlagRequired("repo"); err != nil {
+		panic(err)
+	}
 	rootCmd.AddCommand(initCmd)
 }
