@@ -17,6 +17,8 @@ vault. This sets up the local configuration and clones the repository if needed.
 
 Example:
   ark init --repo github.com/zigorou/my-vault`,
+	// Override parent PersistentPreRunE so that init skips the vault check.
+	PersistentPreRunE: func(cmd *cobra.Command, args []string) error { return nil },
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return errors.New("not implemented")
 	},
