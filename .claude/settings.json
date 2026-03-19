@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/zigorou/repos/ark/scripts/hooks/post-tool-use-synopsis.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
