@@ -4,6 +4,7 @@
 |---|---|
 | **Date** | 2026-03-20 |
 | **Status** | ✅ Accepted |
+| **Type** | Spec |
 | **Issue** | closes #3 |
 
 ## Context

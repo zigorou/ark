@@ -17,7 +17,8 @@ All feature work is traceable to a GitHub issue with Acceptance Criteria.
 |------------|----------------------|
 | `CLAUDE.md` | Harness — encodes constraints, conventions, and guardrails that CC always follows |
 | `docs/concept.md` | Source of truth for design goals — consulted before any non-trivial implementation |
-| GitHub Issues | Unit of spec — each issue captures a design decision and its Acceptance Criteria |
+| `docs/adr/` | Decision log — records why choices were made (Spec, Design, Implementation types) |
+| GitHub Issues | Unit of work — `spec` issues for design decisions, `implementation` issues for coding tasks |
 | Plan mode | Bridge between spec and implementation — design before writing code |
 | `AskUserQuestion` | Decision gate — surfaces trade-offs and gets explicit sign-off before proceeding |
 | Tasks | In-conversation progress tracking for multi-step implementations |
@@ -30,22 +31,25 @@ All feature work is traceable to a GitHub issue with Acceptance Criteria.
 
 ### Phase 1 — Spec
 
-1. Open a GitHub issue for each design question or feature
+1. Open a GitHub issue (label: `spec`) for each design question
 2. Discuss options in conversation; use `AskUserQuestion` when trade-offs exist
 3. Update `docs/concept.md` with the decision
 4. Fill in the `## Acceptance Criteria` checklist on the issue
-5. Issue is now **ready for implementation**
+5. Write a `Type: Spec` ADR in `docs/adr/`
+6. Close the spec issue
 
 > Issues without Acceptance Criteria are not ready for implementation.
-> Do not enter Plan mode until AC is defined.
+> Do not enter Plan mode until AC is defined and the spec ADR is written.
 
 ### Phase 2 — Design
 
-1. Enter Plan mode (`/plan`)
-2. Read the issue and its Acceptance Criteria
-3. Consult `docs/concept.md` for architectural context
-4. Design the implementation approach; use `AskUserQuestion` if multiple viable approaches exist
-5. Exit Plan mode with user approval
+1. Open a GitHub issue (label: `implementation`) referencing the spec issue and ADR
+2. Enter Plan mode (`/plan`)
+3. Read the spec issue, AC, and relevant ADRs
+4. Consult `docs/concept.md` for architectural context
+5. Design the implementation approach; use `AskUserQuestion` if multiple viable approaches exist
+6. If architectural choices are made (package structure, interfaces, library selection), write a `Type: Design` ADR
+7. Exit Plan mode with user approval
 
 ### Phase 3 — Implementation
 
@@ -62,7 +66,7 @@ All feature work is traceable to a GitHub issue with Acceptance Criteria.
    ```
    feat: implement ark init clone flow
 
-   Closes #1
+   Closes #N
    ```
 5. Push and confirm CI passes on GitHub Actions
 

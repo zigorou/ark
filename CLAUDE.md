@@ -180,14 +180,31 @@ Every spec issue **must** contain an `## Acceptance Criteria` section with a che
 ### SDD Workflow
 
 ```
-Open issue (question)
-  → Discuss & decide in conversation (AskUserQuestion for trade-offs)
+[Spec phase]
+spec issue (label: spec)
+  → Discuss & decide (AskUserQuestion for trade-offs)
   → Update concept.md with the decision
-  → Fill in Acceptance Criteria on the issue
-  → Plan mode (design implementation against the AC)
+  → Fill in Acceptance Criteria
+  → Write ADR (Type: Spec)
+  → Close spec issue
+
+[Design phase]
+implementation issue (label: implementation, refs spec issue)
+  → Plan mode (design against AC)
+  → Write ADR (Type: Design) if architectural choices are made
+  → Exit plan mode with user approval
+
+[Implementation phase]
   → Implement (Tasks for step tracking within a conversation)
   → CI passes → Closes #N in commit
 ```
+
+### Issue Labels
+
+| Label | Purpose |
+|-------|---------|
+| `spec` | Design question — what the tool does. Close after AC is defined and ADR written. |
+| `implementation` | Coding task — how to build it. References spec issue and ADR. Close after CI passes. |
 
 ### Guardrails
 
@@ -199,7 +216,8 @@ Open issue (question)
 
 An ADR (`docs/adr/NNNN-<slug>.md`) **must** be written in the following situations:
 
-1. **Closing a spec issue**: when a `spec` issue is resolved, record the decision and discussion as an ADR before closing.
-2. **Before merging a PR**: if the PR introduces an architectural or design decision (choice of library, data format, CLI behavior, security tradeoff), write the ADR before the PR is merged.
+1. **Closing a spec issue**: record the decision and discussion as a `Type: Spec` ADR before closing.
+2. **Design decisions in Plan mode**: if Plan mode produces architectural choices (package structure, interface design, library selection), record them as a `Type: Design` ADR before implementing.
+3. **Before merging a PR**: if the PR introduces a decision not yet captured in an ADR, write it before merge.
 
-Use `docs/adr/0000-template.md` as the template. Reference the issue number in the ADR frontmatter. If no ADR is needed (purely mechanical change), state why explicitly in the PR description.
+Use `docs/adr/0000-template.md` as the template. If no ADR is needed (purely mechanical change), state why explicitly in the PR description.
