@@ -67,8 +67,14 @@ ark edit obsidian
 # Add or update a secret
 ark set ark://obsidian/work/new_key "value"
 
-# Initialize the vault
+# Initialize a local-only vault (no GitHub remote)
+ark init
+
+# Initialize with an existing GitHub repo (clone)
 ark init --repo github.com/zigorou/my-vault
+
+# Initialize and create a new private GitHub repo (requires ARK_GITHUB_TOKEN)
+ark init --repo github.com/zigorou/my-vault  # auto-creates if repo does not exist
 ```
 
 ---

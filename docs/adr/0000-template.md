@@ -1,8 +1,10 @@
 # ADR-XXXX: Title
 
-- **Date**: YYYY-MM-DD
-- **Status**: Accepted | Superseded by ADR-XXXX | Deprecated
-- **Issue**: #N
+| | |
+|---|---|
+| **Date** | YYYY-MM-DD |
+| **Status** | ✅ Accepted \| ⚠️ Superseded by [ADR-XXXX](XXXX-title.md) \| ❌ Deprecated |
+| **Issue** | closes #N |
 
 ## Context
 
@@ -13,10 +15,18 @@ What options were considered?
 
 Key points from the discussion, including trade-offs examined.
 
+> **For** option A
+> - reason
+
+> **Against** option A
+> - reason
+
 ## Decision
 
-What was decided, and why.
+- [x] Decided thing one
+- [x] Decided thing two
 
 ## Consequences
 
-What changes as a result of this decision? Any follow-up items or known limitations.
+- What changes as a result of this decision?
+- Any follow-up items or known limitations.
