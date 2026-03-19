@@ -151,6 +151,7 @@ This project uses Claude Code with harness engineering for development:
 
 - **CLAUDE.md** (this file): the harness — defines constraints, conventions, and guardrails
 - **Hooks** (`.claude/settings.json`): automated guardrails triggered on tool calls (e.g., SYNOPSIS auto-update)
+- **Skills** (`.claude/skills/`): reusable CC workflows — `/sdd-next` (triage), `/open-issue` (issue creation), `/update-process` (doc sync)
 - **Plan mode**: use for any non-trivial implementation before writing code
 - **Agents**: use for parallelizable research tasks or isolated sub-problems
 - **`AskUserQuestion`**: required when multiple viable approaches exist — always include pros/cons and a recommendation
