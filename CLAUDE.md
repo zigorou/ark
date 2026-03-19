@@ -187,6 +187,7 @@ spec issue (label: spec)
   → Fill in Acceptance Criteria
   → Write ADR (Type: Spec)
   → Close spec issue
+  → Open implementation issue
 
 [Design phase]
 implementation issue (label: implementation, refs spec issue)
@@ -197,6 +198,14 @@ implementation issue (label: implementation, refs spec issue)
 [Implementation phase]
   → Implement (Tasks for step tracking within a conversation)
   → CI passes → Closes #N in commit
+
+[Process phase]
+process issue (label: process)
+  → Describe problem and proposed change
+  → Fill in Acceptance Criteria
+  → Implement (update docs, CLAUDE.md, templates, etc.)
+  → Write ADR (Type: Process)
+  → Closes #N in commit
 ```
 
 ### Issue Labels
@@ -205,6 +214,7 @@ implementation issue (label: implementation, refs spec issue)
 |-------|---------|
 | `spec` | Design question — what the tool does. Close after AC is defined and ADR written. |
 | `implementation` | Coding task — how to build it. References spec issue and ADR. Close after CI passes. |
+| `process` | Harness improvement — workflow friction or failure. Close after docs updated and Process ADR written. |
 
 ### Guardrails
 
@@ -218,6 +228,7 @@ An ADR (`docs/adr/NNNN-<slug>.md`) **must** be written in the following situatio
 
 1. **Closing a spec issue**: record the decision and discussion as a `Type: Spec` ADR before closing.
 2. **Design decisions in Plan mode**: if Plan mode produces architectural choices (package structure, interface design, library selection), record them as a `Type: Design` ADR before implementing.
-3. **Before merging a PR**: if the PR introduces a decision not yet captured in an ADR, write it before merge.
+3. **Closing a process issue**: record the problem, decision, and motivation as a `Type: Process` ADR before closing.
+4. **Before merging a PR**: if the PR introduces a decision not yet captured in an ADR, write it before merge.
 
 Use `docs/adr/0000-template.md` as the template. If no ADR is needed (purely mechanical change), state why explicitly in the PR description.

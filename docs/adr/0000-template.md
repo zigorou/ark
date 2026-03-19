@@ -4,7 +4,7 @@
 |---|---|
 | **Date** | YYYY-MM-DD |
 | **Status** | ✅ Accepted \| ⚠️ Superseded by [ADR-XXXX](XXXX-title.md) \| ❌ Deprecated |
-| **Type** | Spec \| Design \| Implementation |
+| **Type** | Spec \| Design \| Implementation \| Process |
 | **Issue** | closes #N |
 | **Refs** | [ADR-XXXX](XXXX-title.md), spec #N — omit if not applicable |
 
