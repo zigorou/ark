@@ -6,7 +6,7 @@
 | **Status** | ✅ Accepted |
 | **Type** | Process |
 | **Issue** | — (not tied to a tracked issue) |
-| **Refs** | [ADR-0006](0006-next-skill.md) — `/next` skill (prior skill addition) |
+| **Refs** | — |
 
 ## Context
 
@@ -64,9 +64,6 @@ Four checks were selected:
 - [x] Add `.claude/rules/skills.md` scoped to `.claude/skills/**/SKILL.md`
 - [x] Rules enforce: frontmatter required fields, description imperative style,
       `skill-creator` for non-trivial changes, `allowed-tools` least privilege
-- [x] Migrated `/next` and `/open-issue` from `.claude/commands/` (legacy) to `.claude/skills/`
-      (recommended format) per issue #10
-
 ## Consequences
 
 - Developers can run `/open-issue spec|impl|process` to create a correctly-labelled,

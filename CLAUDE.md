@@ -224,11 +224,20 @@ process issue (label: process)
 
 ### ADR Requirements
 
-An ADR (`docs/adr/NNNN-<slug>.md`) **must** be written in the following situations:
+**ADR-worthy test** — ask this before writing any ADR:
+> "Would a future developer or CC reasonably ask *why we made this choice*, and would the commit message alone fail to answer it?"
+> If **No** → skip the ADR.
+
+Changes that do **not** warrant an ADR:
+- Renames, moves, or path updates that follow a prior decision
+- Changes where the only alternative was not actually viable (false trade-off)
+- Anything fully explained by the commit message
+
+An ADR (`docs/adr/NNNN-<slug>.md`) **must** be written when the test passes, in these situations:
 
 1. **Closing a spec issue**: record the decision and discussion as a `Type: Spec` ADR before closing.
 2. **Design decisions in Plan mode**: if Plan mode produces architectural choices (package structure, interface design, library selection), record them as a `Type: Design` ADR before implementing.
 3. **Closing a process issue**: record the problem, decision, and motivation as a `Type: Process` ADR before closing.
-4. **Before merging a PR**: if the PR introduces a decision not yet captured in an ADR, write it before merge.
+4. **Before merging a PR**: if the PR introduces a non-obvious decision not yet captured in an ADR, write it before merge.
 
-Use `docs/adr/0000-template.md` as the template. If no ADR is needed (purely mechanical change), state why explicitly in the PR description.
+Use `docs/adr/0000-template.md` as the template.
