@@ -1,6 +1,6 @@
 ---
 paths:
-  - ".claude/commands/**/*.md"
+  - ".claude/skills/**/SKILL.md"
 ---
 
 # Skill Authoring Rules

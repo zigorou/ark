@@ -57,13 +57,15 @@ Four checks were selected:
 
 ## Decision
 
-- [x] Add `.claude/commands/open-issue.md` — single skill handling spec/impl/process types
+- [x] Add `.claude/skills/open-issue/SKILL.md` — single skill handling spec/impl/process types
 - [x] Skill reads the corresponding `.github/ISSUE_TEMPLATE/*.md`, gathers missing info via
       `AskUserQuestion`, then runs `gh issue create`
 - [x] Skill is non-destructive beyond issue creation: does not start Plan mode or write code
-- [x] Add `.claude/rules/skills.md` scoped to `.claude/commands/**/*.md`
+- [x] Add `.claude/rules/skills.md` scoped to `.claude/skills/**/SKILL.md`
 - [x] Rules enforce: frontmatter required fields, description imperative style,
       `skill-creator` for non-trivial changes, `allowed-tools` least privilege
+- [x] Migrated `/next` and `/open-issue` from `.claude/commands/` (legacy) to `.claude/skills/`
+      (recommended format) per issue #10
 
 ## Consequences
 
