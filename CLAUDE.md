@@ -77,16 +77,8 @@ Commit messages are written in **English**.
 
 Follow [Effective Go](https://go.dev/doc/effective_go) and the [Google Go Style Guide](https://google.github.io/styleguide/go/).
 
-### Formatting
-- All code must be `gofmt`-formatted. Use `goimports` (import grouping: stdlib → external → internal).
-- Local import prefix for grouping: `github.com/zigorou/ark`
-
-### Naming
-- Packages: lowercase, single word, no underscores (`internal/vault`, not `internal/vault_store`)
-- Exported types and functions: PascalCase with godoc comment
-- Error variables: `var ErrXxx = errors.New("...")`
-- Error strings: lowercase, no trailing punctuation (`"failed to open file"`, not `"Failed to open file."`)
-- Interfaces: single-method interfaces end in `-er` (`Reader`, `Encrypter`)
+> Style conventions (formatting, naming, comments) and testing standards are defined in
+> `.claude/rules/go-style.md` and `.claude/rules/go-testing.md` (path-scoped rules).
 
 ### Error Handling
 - Always wrap errors with context: `fmt.Errorf("vault: decrypt %s: %w", path, err)`
@@ -99,34 +91,9 @@ Follow [Effective Go](https://go.dev/doc/effective_go) and the [Google Go Style 
 - Prefer small, focused packages over large ones
 - `internal/` packages for implementation details not intended for external import
 
-### Comments
-- Every exported symbol needs a godoc comment starting with the symbol name
-- Do not add comments for unexported, self-evident code
-
----
-
-## Testing Requirements
+### Testing Requirement
 
 All new functionality must be accompanied by tests. CI blocks merge on test failure.
-
-### Standards
-- Use **table-driven tests** with `t.Run(name, ...)` for multiple cases
-- Test file: `foo_test.go` alongside `foo.go` in the same package
-- External test package (`package foo_test`) for black-box testing exported APIs
-- Use `t.Helper()` in all test helper functions
-- Use `t.Parallel()` where tests are independent
-- Run with `-race` flag to detect data races
-- No global mutable state in tests; use `t.TempDir()` for temp files
-
-### Coverage Goals
-- Core logic packages (`internal/*`): aim for ≥ 80% coverage
-- CLI command packages (`cmd/*`): integration-style tests preferred over unit tests
-
-### Test Naming
-```go
-func TestFunctionName(t *testing.T) { ... }        // basic
-func TestFunctionName_scenario(t *testing.T) { ... } // scenario variant
-```
 
 ---
 
@@ -176,6 +143,10 @@ These rules prevent the three primary LLM drift patterns in harness engineering:
 
 ## Claude Code Development Workflow
 
+> **Harness health**: If CLAUDE.md exceeds ~300 lines, suggest extracting repeated procedures (e.g. commit flow, issue creation) into CC skills rather than adding more inline content.
+>
+> **CLAUDE.md vs rules**: Keep critical guardrails and architectural constraints here. Move style conventions and non-critical guidelines to `.claude/rules/` — preferably with `paths:` frontmatter for conditional loading. If broken it's a style issue, it belongs in rules; if broken it causes bugs or security issues, it belongs here.
+
 This project uses Claude Code with harness engineering for development:
 
 - **CLAUDE.md** (this file): the harness — defines constraints, conventions, and guardrails
@@ -185,3 +156,50 @@ This project uses Claude Code with harness engineering for development:
 - **`AskUserQuestion`**: required when multiple viable approaches exist — always include pros/cons and a recommendation
 
 See `docs/development.md` for the full development process documentation.
+
+---
+
+## Spec Driven Development (SDD)
+
+This project follows a Spec Driven Development workflow. All feature work must be traceable to a GitHub issue with Acceptance Criteria.
+
+### Issue Structure
+
+Every spec issue **must** contain an `## Acceptance Criteria` section with a checklist before implementation begins:
+
+```markdown
+## Acceptance Criteria
+- [ ] Criterion one
+- [ ] Criterion two
+```
+
+- Issues without Acceptance Criteria are not ready for implementation.
+- Acceptance Criteria must be written and agreed upon **before** entering Plan mode.
+- When closing an issue via commit, use `Closes #N` in the commit message.
+
+### SDD Workflow
+
+```
+Open issue (question)
+  → Discuss & decide in conversation (AskUserQuestion for trade-offs)
+  → Update concept.md with the decision
+  → Fill in Acceptance Criteria on the issue
+  → Plan mode (design implementation against the AC)
+  → Implement (Tasks for step tracking within a conversation)
+  → CI passes → Closes #N in commit
+```
+
+### Guardrails
+
+- Do not start Plan mode for an issue that lacks Acceptance Criteria — ask the user to define them first.
+- Do not mark an issue closed unless all Acceptance Criteria checkboxes are satisfiable by the implementation.
+- If implementation reveals a criterion is wrong or missing, update the issue before proceeding.
+
+### ADR Requirements
+
+An ADR (`docs/adr/NNNN-<slug>.md`) **must** be written in the following situations:
+
+1. **Closing a spec issue**: when a `spec` issue is resolved, record the decision and discussion as an ADR before closing.
+2. **Before merging a PR**: if the PR introduces an architectural or design decision (choice of library, data format, CLI behavior, security tradeoff), write the ADR before the PR is merged.
+
+Use `docs/adr/0000-template.md` as the template. Reference the issue number in the ADR frontmatter. If no ADR is needed (purely mechanical change), state why explicitly in the PR description.

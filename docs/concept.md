@@ -78,11 +78,11 @@ ark init --repo github.com/zigorou/my-vault
 A GitHub private repo (e.g. `zigorou/my-vault`) contains encrypted YAML files:
 
 ```
-my-vault/
+~/.ark/
   .sops.yaml
-  obsidian.enc.yaml
-  aws.enc.yaml
-  github.enc.yaml
+  obsidian.yaml
+  aws.yaml
+  github.yaml
 ```
 
 Decrypted YAML structure:
@@ -126,6 +126,24 @@ ark acts as a SOPS wrapper + URI resolver + UX layer for `run`/`inject`.
 
 ---
 
+## Vault Directory
+
+The vault is a single git repository on the local filesystem.
+
+| Config | Value |
+|--------|-------|
+| Default path | `~/.ark` |
+| Override | `ARK_VAULT_DIR` environment variable |
+
+### Rules
+
+- The directory itself is the vault repo (no subdirectory nesting).
+- `ark init` requires the target directory to either not exist or be empty; if it exists and is non-empty, `ark init` exits with an error.
+- A `git remote origin` is strongly recommended. ark warns on every invocation if `origin` is not configured.
+- Multiple vaults are out of scope for v1. Users who need multiple vaults can use shell aliases: `alias ark-work='ARK_VAULT_DIR=~/.ark-work ark'`.
+
+---
+
 ## Out of Scope (v1)
 
 - Team-level access control (vault access is delegated to git repository permissions)
@@ -143,7 +161,28 @@ ark acts as a SOPS wrapper + URI resolver + UX layer for `run`/`inject`.
 
 ---
 
-## Open Questions
+## Configuration
 
-- Timing of automatic vault repo clone/pull (pull on every startup, or manual pull?)
-- Key management strategy (age keys are local to each machine; backup via Google Passwords or similar as a string)
+ark uses a config file at `~/.config/ark/config.yaml`, separate from the vault repo.
+
+### Sync Policy
+
+```yaml
+sync:
+  mode: interval   # always | interval | manual
+  interval: 1h     # effective only when mode: interval
+```
+
+- `always`: pull on every ark invocation
+- `interval`: pull only if the elapsed time since last sync exceeds `interval` (last sync time stored in `~/.cache/ark/last-sync`)
+- `manual`: never pull automatically; user runs `git pull` or a future `ark sync` command
+
+### age Identity
+
+```yaml
+identity_file: ~/.config/ark/identity.txt  # default
+```
+
+- The identity file holds a **plaintext** age private key — no passphrase prompt on use.
+- Override with `ARK_IDENTITY_FILE` environment variable (takes precedence over config).
+- **Backup strategy**: encrypt a copy with `age -p -o identity.txt.enc identity.txt` and store in a password manager, or save the plaintext key as a secure note.
