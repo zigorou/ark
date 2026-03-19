@@ -37,9 +37,14 @@ All feature work is traceable to a GitHub issue with Acceptance Criteria.
 4. Fill in the `## Acceptance Criteria` checklist on the issue
 5. Write a `Type: Spec` ADR in `docs/adr/`
 6. Close the spec issue
+7. Open a corresponding `implementation` issue referencing the spec issue and ADR
 
 > Issues without Acceptance Criteria are not ready for implementation.
 > Do not enter Plan mode until AC is defined and the spec ADR is written.
+>
+> **Triage rule**: if a closed spec issue has no corresponding open `implementation` issue,
+> create one before starting any other work. When asked "what's next", check for this gap
+> first and recommend filling it.
 
 ### Phase 2 — Design
 
