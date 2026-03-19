@@ -6,6 +6,7 @@
 | **Status** | ✅ Accepted \| ⚠️ Superseded by [ADR-XXXX](XXXX-title.md) \| ❌ Deprecated |
 | **Type** | Spec \| Design \| Implementation |
 | **Issue** | closes #N |
+| **Refs** | [ADR-XXXX](XXXX-title.md), spec #N — omit if not applicable |
 
 ## Context
 

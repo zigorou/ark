@@ -51,6 +51,11 @@ All feature work is traceable to a GitHub issue with Acceptance Criteria.
 6. If architectural choices are made (package structure, interfaces, library selection), write a `Type: Design` ADR
 7. Exit Plan mode with user approval
 
+**Plan mode exit checklist** (must be complete before starting implementation):
+- [ ] Acceptance Criteria reviewed and understood
+- [ ] Design ADR written — or explicitly noted as not needed (purely mechanical change)
+- [ ] User has approved the plan
+
 ### Phase 3 — Implementation
 
 1. Use Tasks to break the work into verifiable steps
